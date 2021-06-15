@@ -68,7 +68,7 @@ impl Multipart {
     }
 
     /// Extract boundary info from headers.
-    pub(crate) fn boundary(headers: &HeaderMap) -> Result<String, MultipartError> {
+    pub fn boundary(headers: &HeaderMap) -> Result<String, MultipartError> {
         if let Some(content_type) = headers.get(&header::CONTENT_TYPE) {
             if let Ok(content_type) = content_type.to_str() {
                 if let Ok(ct) = content_type.parse::<mime::Mime>() {
@@ -89,7 +89,7 @@ impl Multipart {
     }
 
     /// Create multipart instance for given boundary and stream
-    pub(crate) fn from_boundary<S>(boundary: String, stream: S) -> Multipart
+    pub fn from_boundary<S>(boundary: String, stream: S) -> Multipart
     where
         S: Stream<Item = Result<Bytes, PayloadError>> + Unpin + 'static,
     {
